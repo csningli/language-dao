@@ -29,6 +29,10 @@
     'name': 'comment'
   }
   {
+    'match': '\\b(public|protect|private|self)'
+    'name': 'variable.language.dao'
+  }
+  {
     'match': '\\b(?i:(0x\\h*)L)'
     'name': 'constant.numeric.integer.long.hexadecimal.dao'
   }
@@ -98,7 +102,7 @@
   {
     'comment': 'keyword operators that evaluate to True or False'
     'match': '\\b(and|in|not|or)\\b'
-    'name': 'keyword.operator.logical.dao'
+    'name' : 'support.function.logic.dao'
   }
   {
     'captures':
@@ -109,19 +113,28 @@
   }
   {
     'match': '<\\=|>\\=|\\=\\=|<|>|\\!\\='
-    'name': 'keyword.operator.comparison.dao'
+    'name' : 'support.function.comparison.dao'
   }
   {
-    'match': '\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|&\\=|\\|\\=|\\^\\=|>>\\=|<<\\=|\\*\\*\\='
-    'name': 'keyword.operator.assignment.augmented.dao'
+    'match': '\\=|\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|&\\=|\\|\\=|\\^\\=|>>\\=|<<\\=|\\*\\*\\='
+    'name' : 'support.function.assignment.dao'
   }
   {
     'match': '\\+|\\-|\\*|\\*\\*|/|//|%'
-    'name': 'keyword.operator.arithmetic.dao'
+    'name' : 'support.function.arithmetic.dao'
   }
   {
-    'match': '\\='
-    'name': 'keyword.operator.assignment.dao'
+    'match': '\\s+(?<=\\\()([A-Za-z_][A-Za-z0-9_]*)(?=\\\))'
+    'name' : 'entity.name.type.class.dao'
+  }
+  {
+    'begin': '^\\s+(?=\\\()'
+    'end': '\\s*(?=\\\))'
+    'patterns' : [
+        'begin': '(?=[a-zA-Z_][a-zA-Z_0-9]*)'
+        'contentName': 'entity.name.type.class.dao'
+        'end': '\\s*(?=\\\))'
+    ]
   }
   {
     'begin': '^\\s*(class)\\s+(?=[a-zA-Z_][a-zA-Z_0-9]*)'
@@ -132,7 +145,6 @@
     'endCaptures':
       '1':
         'name': 'punctuation.section.class.begin.dao'
-    'name': 'meta.class.dao'
     'patterns': [
       {
         'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
@@ -181,7 +193,6 @@
     'endCaptures':
       '1':
         'name': 'punctuation.section.class.begin.dao'
-    'name': 'meta.class.dao'
     'patterns': [
       {
         'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
@@ -197,8 +208,7 @@
         'begin': '\\s+(\\:)'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.inheritance.begin.dao'
-        'contentName': 'meta.class.inheritance.dao'
+            'name': 'punctuation.separator.inheritance.dao'
         'end': '\\s*(\\{|\\n)'
         'endCaptures':
           '1':
@@ -229,10 +239,7 @@
           'name': 'storage.type.class.dao'
         '2':
           'name': 'storage.type.function.dao'
-    'end': '\\s*(\\{|\\}|(routine)})'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.function.begin.dao'
+    'end': '((\\s*(\\{|\\}))|(?=(\\s*routine)))'
     'name': 'meta.function.dao'
     'patterns': [
       {
@@ -260,19 +267,21 @@
             'include': '#line_comments'
           }
           {
-            # param = 3
-            # param: int = 3
-            'begin': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?\\s*(=)\\s*'
+
+            'begin': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?\\s*(\\=)?\\s*'
             'beginCaptures':
               '1':
                 'name': 'variable.parameter.function.dao'
               '2':
-                'name': 'punctuation.separator.dao'
+                'name': 'punctuation.separator.inheritance.dao'
               '3':
-                'name': 'storage.type.dao'
+                'name' : 'entity.name.type.class.dao'
               '4':
                 'name': 'keyword.operator.assignment.dao'
-            'end': '(?!\\G)'
+            'end': '\\s*(,)'
+            'endCaptures':
+              '1':
+                'name' : 'entity.name.type.class.dao'
             'patterns': [
               {
                 'include': '$self'
@@ -280,8 +289,6 @@
             ]
           }
           {
-            # param
-            # param: int
             'match': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?'
             'captures':
               '1':
@@ -298,7 +305,7 @@
         ]
       }
       {
-        'match': '(->)\\s*([A-Za-z_][\\w_]*)(?=\\s*:)'
+        'match': '(=>)\\s*([A-Za-z_][\\w_]*)(?=\\s*:)'
         'captures':
           '1':
             'name': 'keyword.operator.function-annotation.dao'
@@ -331,306 +338,88 @@
     'include': '#string_quoted_double'
   }
   {
-    'begin': '^\\s*(var)\\s+(?=[A-Za-z_][A-Za-z0-9_]*)'
+    'begin' : '\\\(\\s*(?=var)'
+    'contentName': 'storage.type.class.dao'
+    'end' : '\\s+'
+  }
+  {
+    'begin': '^\\s*(var)\\s*(?=[A-Za-z_][A-Za-z0-9_]*)'
     'beginCaptures':
         '1':
           'name': 'storage.type.class.dao'
-    'end': '\\s*(\\=|\\n)'
+    'end': '\\s*((\\=)|\\r|\\n)\\s*'
     'endCaptures':
       '0':
         'name': 'punctuation.definition.function.begin.dao'
-    'name': 'meta.function.dao'
+      '1':
+        'name': 'support.function.assignment.dao'
     'patterns': [
       {
-        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
-        'contentName': 'entity.name.function.dao'
-        'end': '(?![A-Za-z0-9_])'
+        'begin': '\\s*(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'end': '\\s*(?=(\\=))'
         'patterns': [
-          {
-            'include': '#entity_name_function'
-          }
+            {
+              'match' : '(,)'
+              'name' : 'entity.name.type.class.dao'
+            }
+            {
+              'begin': '\\s*(?=(\\:))'
+              'end': '\\s*(?=(\\=))'
+              'patterns': [
+                  {
+                    'begin': '\\s*(?=[A-Za-z_][A-Za-z0-9_]*)'
+                    'end' : '(\\s*(?=(\\=)))|(\\\|)'
+                    'endCaptures':
+                      '3':
+                        'name' : 'entity.name.type.class.dao'
+                    'patterns': [
+                      {
+                        'begin': '\\s*(?=[A-Za-z_][A-Za-z0-9_]*)'
+                        'end' : '(\\s*(?=(\\=)))|(\\\|)'
+                        'patterns': [
+                          {
+                            'match' : '\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*'
+                            'name' : 'entity.name.type.class.dao'
+                          }
+                          {
+                            'begin': '\\s*([A-Za-z_][A-Za-z0-9_]*)?\\\<'
+                            'beginCaptures':
+                              '1':
+                                'name' : 'entity.name.type.class.dao'
+                            'contentName' : 'entity.name.type.class.dao'
+                            'end' : '\\\>'
+                            'patterns': [
+                              {
+                                'begin': '\\s*(\\:)(\\s*(?=[A-Za-z_][A-Za-z0-9_]*))'
+                                'contentName' : 'entity.name.type.class.dao'
+                                'end': '\\s*(?=(,|\\s))'
+                                'patterns': [
+                                  {
+                                    'include': '$base'
+                                  }
+                                ]
+                              }
+                              {
+                                'include': '$self'
+                              }                              
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+              ]
+           }
         ]
-      }
-      {
-        'begin': '\\('
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.parameters.begin.dao'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.parameters.end.dao'
-        'contentName': 'meta.function.parameters.dao'
-        'patterns': [
-          {
-            'include': '#line_comments'
-          }
-          {
-            # param = 3
-            # param: int = 3
-            'begin': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?\\s*(=)\\s*'
-            'beginCaptures':
-              '1':
-                'name': 'variable.parameter.function.dao'
-              '2':
-                'name': 'punctuation.separator.dao'
-              '3':
-                'name': 'storage.type.dao'
-              '4':
-                'name': 'keyword.operator.assignment.dao'
-            'end': '(?!\\G)'
-            'patterns': [
-              {
-                'include': '$self'
-              }
-            ]
-          }
-          {
-            # param
-            # param: int
-            'match': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?'
-            'captures':
-              '1':
-                'name': 'variable.parameter.function.dao'
-              '2':
-                'name': 'punctuation.separator.dao'
-              '3':
-                'name': 'storage.type.dao'
-          }
-          {
-            'match': ','
-            'name': 'punctuation.separator.parameters.dao'
-          }
-        ]
-      }
-      {
-        'match': '(->)\\s*([A-Za-z_][\\w_]*)(?=\\s*:)'
-        'captures':
-          '1':
-            'name': 'keyword.operator.function-annotation.dao'
-          '2':
-            'name': 'storage.type.dao'
       }
     ]
   }
-
-  # {
-  #   'begin': '(\\()'
-  #   'end': '(\\))'
-  #   'patterns': [
-  #     {
-  #       'include': '$self'
-  #     }
-  #   ]
-  # }
-  # {
-  #   'captures':
-  #     '1':
-  #       'name': 'punctuation.definition.list.begin.dao'
-  #     '2':
-  #       'name': 'meta.empty-list.dao'
-  #     '3':
-  #       'name': 'punctuation.definition.list.end.dao'
-  #   'match': '(\\{)(\\s*(\\}))\\b'
-  # }
-  # {
-  #   'begin': '(\\{)'
-  #   'beginCaptures':
-  #     '1':
-  #       'name': 'punctuation.definition.list.begin.dao'
-  #   'end': '(\\})'
-  #   'endCaptures':
-  #     '1':
-  #       'name': 'punctuation.definition.list.end.dao'
-  #   'name': 'meta.structure.list.dao'
-  #   'patterns': [
-  #     {
-  #       'begin': '(?<=\\{|\\,)\\s*(?![\\},])'
-  #       'contentName': 'meta.structure.list.item.dao'
-  #       'end': '\\s*(?:(,)|(?=\\}))'
-  #       'endCaptures':
-  #         '1':
-  #           'name': 'punctuation.separator.list.dao'
-  #       'patterns': [
-  #         {
-  #           'include': '$self'
-  #         }
-  #       ]
-  #     }
-  #   ]
-  # }
-  # {
-  #   'captures':
-  #     '1':
-  #       'name': 'punctuation.definition.tuple.begin.dao'
-  #     '2':
-  #       'name': 'meta.empty-tuple.dao'
-  #     '3':
-  #       'name': 'punctuation.definition.tuple.end.dao'
-  #   'match': '(\\()(\\s*(\\)))'
-  #   'name': 'meta.structure.tuple.dao'
-  # }
-  # {
-  #   'captures':
-  #     '1':
-  #       'name': 'punctuation.definition.dictionary.begin.dao'
-  #     '2':
-  #       'name': 'meta.empty-dictionary.dao'
-  #     '3':
-  #       'name': 'punctuation.definition.dictionary.end.dao'
-  #   'match': '(\\{)(\\s*(\\}))'
-  #   'name': 'meta.structure.dictionary.dao'
-  # }
-  # {
-  #   'begin': '(\\{)'
-  #   'beginCaptures':
-  #     '1':
-  #       'name': 'punctuation.definition.dictionary.begin.dao'
-  #   'end': '(\\})'
-  #   'endCaptures':
-  #     '1':
-  #       'name': 'punctuation.definition.dictionary.end.dao'
-  #   'name': 'meta.structure.dictionary.dao'
-  #   'patterns': [
-  #     {
-  #       'begin': '(?<=\\{|\\,|^)\\s*(?![\\},])'
-  #       'contentName': 'meta.structure.dictionary.key.dao'
-  #       'end': '\\s*(?:(?=\\})|(\\=>))'
-  #       'endCaptures':
-  #         '1':
-  #           'name': 'punctuation.separator.valuepair.dictionary.dao'
-  #       'patterns': [
-  #         {
-  #           'include': '$self'
-  #         }
-  #       ]
-  #     }
-  #     {
-  #       'begin': '(?<=\\=>|^)\\s*'
-  #       'contentName': 'meta.structure.dictionary.value.dao'
-  #       'end': '\\s*(?:(?=\\})|(,))'
-  #       'endCaptures':
-  #         '1':
-  #           'name': 'punctuation.separator.dictionary.dao'
-  #       'patterns': [
-  #         {
-  #           'include': '$self'
-  #         }
-  #       ]
-  #     }
-  #   ]
-  # }
-  # {
-  #   'include': '#function_calls'
-  # }
-  # {
-  #   'include': '#method_calls'
-  # }
-  # {
-  #   'include': '#objects'
-  # }
-  # {
-  #   'include': '#properties'
-  # }
-  # {
-  #   'begin': '^\\s*(?:(interface)\\s+)?(routine)\\s+(?=[A-Za-z_][A-Za-z0-9_]*)'
-  #   'beginCaptures':
-  #     '1':
-  #       'name': 'storage.modifier.interface.dao'
-  #     '2':
-  #       'name': 'storage.type.function.dao'
-  #   'end': '()'
-  #   'endCaptures':
-  #     '0':
-  #       'name': 'punctuation.definition.function.begin.dao'
-  #   'name': 'meta.function.dao'
-  #   'patterns': [
-  #     {
-  #       'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
-  #       'contentName': 'entity.name.function.dao'
-  #       'end': '(?![A-Za-z0-9_])'
-  #       'patterns': [
-  #         {
-  #           'include': '#entity_name_function'
-  #         }
-  #       ]
-  #     }
-  #     {
-  #       'begin': '\\('
-  #       'beginCaptures':
-  #         '0':
-  #           'name': 'punctuation.definition.parameters.begin.dao'
-  #       'end': '\\)'
-  #       'endCaptures':
-  #         '0':
-  #           'name': 'punctuation.definition.parameters.end.dao'
-  #       'contentName': 'meta.function.parameters.dao'
-  #       'patterns': [
-  #         {
-  #           'include': '#line_comments'
-  #         }
-  #         {
-  #           # param = 3
-  #           # param: int = 3
-  #           'begin': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?\\s*(=)\\s*'
-  #           'beginCaptures':
-  #             '1':
-  #               'name': 'variable.parameter.function.dao'
-  #             '2':
-  #               'name': 'punctuation.separator.dao'
-  #             '3':
-  #               'name': 'storage.type.dao'
-  #             '4':
-  #               'name': 'keyword.operator.assignment.dao'
-  #           'end': '(?!\\G)'
-  #           'patterns': [
-  #             {
-  #               'include': '$self'
-  #             }
-  #           ]
-  #         }
-  #         {
-  #           # param
-  #           # param: int
-  #           'match': '\\b([a-zA-Z_][\\w_]*)\\s*(?:(:)\\s*([a-zA-Z_][\\w_]*))?'
-  #           'captures':
-  #             '1':
-  #               'name': 'variable.parameter.function.dao'
-  #             '2':
-  #               'name': 'punctuation.separator.dao'
-  #             '3':
-  #               'name': 'storage.type.dao'
-  #         }
-  #         {
-  #           'match': ','
-  #           'name': 'punctuation.separator.parameters.dao'
-  #         }
-  #       ]
-  #     }
-  #     {
-  #       'match': '(->)\\s*([A-Za-z_][\\w_]*)(?=\\s*:)'
-  #       'captures':
-  #         '1':
-  #           'name': 'keyword.operator.function-annotation.dao'
-  #         '2':
-  #           'name': 'storage.type.dao'
-  #     }
-  #   ]
-  # }
 ]
 
-# 'repository':
-#
-# 'builtin_functions':
-#     'match': '(?x)\\b(public|protect|private|bool|complex|string|float|list|open|writeln|write|tuple|type|var|reload)\\b'
-#     'name': 'support.function.builtin.dao'
-# 'builtin_types':
-#     'match': '(?x)\\b(\n\t\t\t\tbool|complex|float|int|\n\t\t\t\tlist|map|string|long|dict|tuple\n\t\t\t)\\b'
-#     'name': 'support.type.dao'
-  # "declarations": {
-	# 		"patterns": [
-	# 			{
-	# 				"include": "#type-declarations"
-	# 			},
-	# 		]
-	# 	},
+'repository':
+  'builtin_functions':
+    'match': '\\b(public|protect|private|bool|complex|string|float|list|open|writeln|write|tuple|type|var|reload)\\b'
+    'name': 'support.function.builtin.dao'
+'builtin_types':
+    'match': '(?x)\\b(\n\t\t\t\tbool|complex|float|int|\n\t\t\t\tlist|map|string|long|dict|tuple\n\t\t\t)\\b'
+    'name': 'support.type.dao'
