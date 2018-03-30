@@ -113,6 +113,10 @@
     'match': '\\b(write|writeln|iterate|size|append|erase|insert|clear|push|pop|keys|values)\\b'
   }
   {
+    'match': '\\b([A-Za-z_]+\\:\\:[A-Za-z0-9_]+)\\b'
+    'name': 'entity.other.inherited-class.python'
+  }
+  {
     'match': '<\\=|>\\=|\\=\\=|<|>|\\[|\\]|{|}|\\(|\\)|\\!\\='
     'name' : 'support.function.comparison.dao'
   }
@@ -233,11 +237,3 @@
     'end' : '\\s+'
   }
 ]
-
-'repository':
-  'builtin_functions':
-    'match': '\\b(public|protect|private|bool|complex|string|float|list|open|writeln|write|tuple|type|var|reload)\\b'
-    'name': 'support.function.builtin.dao'
-'builtin_types':
-    'match': '(?x)\\b(\n\t\t\t\tbool|complex|float|int|\n\t\t\t\tlist|map|string|long|dict|tuple\n\t\t\t)\\b'
-    'name': 'support.type.dao'
