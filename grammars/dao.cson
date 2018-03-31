@@ -116,10 +116,10 @@
     'match': '\\b([A-Za-z_]+\\:\\:[A-Za-z0-9_]+)\\b'
     'name': 'entity.other.inherited-class.python'
   }
-  {
-    'match': '<\\=|>\\=|\\=\\=|<|>|\\[|\\]|{|}|\\(|\\)|\\!\\='
-    'name' : 'support.function.comparison.dao'
-  }
+  # {
+  #   'match': '<\\=|>\\=|\\=\\=|<|>|\\[|\\]|{|}|\\(|\\)|\\!\\='
+  #   'name' : 'support.function.comparison.dao'
+  # }
   {
     'match': '\\=|\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|>>\\=|<<\\=|\\*\\*\\='
     'name' : 'support.function.assignment.dao'
@@ -131,6 +131,10 @@
   {
     'match': '\\s+(?<=\\()([A-Za-z_][A-Za-z0-9_]*)(?=\\\))'
     'name' : 'entity.name.type.class.dao'
+  }
+  {
+    'match': '\\b(string|list|tuple|map|float|bool|int|complex|enum|array|variant)\\b'
+    'name': 'entity.name.type.class.dao'
   }
   {
     'match': ',|\\:|\\||\\.'
