@@ -29,7 +29,7 @@
     'name': 'comment'
   }
   {
-    'match': '\\b(public|protect|private|self|io|fs|os|std)\\b'
+    'match': '\\b(public|protect|private|static|self|io|fs|os|std)\\b'
     'name': 'variable.language.dao'
   }
   {
