@@ -121,8 +121,13 @@
   #   'name' : 'support.function.comparison.dao'
   # }
   {
-    'match': '\\=|\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|>>\\=|<<\\=|\\*\\*\\='
+    'match': '\\+\\=|-\\=|\\*\\=|/\\=|%\\=|>>\\=|<<\\='
     'name' : 'support.function.assignment.dao'
+  }
+  {
+      'begin' : '(?<!\\(|\\=|\\<|\\>)(?=\\=(?!\\=))'
+      'contentName' : 'support.function.assignment.dao'
+      'end': '\\s+'
   }
   {
     'match': '\\+|\\-|\\*|\\*\\*|/|//|%'
