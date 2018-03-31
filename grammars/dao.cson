@@ -125,13 +125,22 @@
     'name' : 'support.function.assignment.dao'
   }
   {
-      'begin' : '(?<!\\(|\\=|\\<|\\>)(?=\\=(?!\\=))'
+      'begin' : '(?<!\\!|\\=|\\<|\\>)(?=\\=(?!\\=))'
       'contentName' : 'support.function.assignment.dao'
-      'end': '\\s+'
+      'end': '\\s+|(\')|(\")'
+      'endCaptures':
+        '1':
+          'name': 'entity.name.type.class.dao'
+        '2':
+          'name': 'entity.name.type.class.dao'
   }
   {
     'match': '\\+|\\-|\\*|\\*\\*|/|//|%'
     'name' : 'support.function.arithmetic.dao'
+  }
+  {
+    'match': ',|\\:|\\||\\.|\'|\"'
+    'name': 'entity.name.type.class.dao'
   }
   {
     'match': '\\s+(?<=\\()([A-Za-z_][A-Za-z0-9_]*)(?=\\\))'
@@ -139,10 +148,6 @@
   }
   {
     'match': '\\b(string|list|tuple|map|float|bool|int|complex|enum|array|variant)\\b'
-    'name': 'entity.name.type.class.dao'
-  }
-  {
-    'match': ',|\\:|\\||\\.'
     'name': 'entity.name.type.class.dao'
   }
   {
