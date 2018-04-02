@@ -7,16 +7,6 @@
   'dao'
 ]
 'firstLineMatch': '^#![ \\t]*/.*\\bdao[\\d\\.]*\\b'
-'injections':
-  'L:source.dao meta.embedded.sql':
-    'patterns': [
-      {
-        'include': '#string_formatting'
-      }
-      {
-        'include': '#escaped_char'
-      }
-    ]
 'patterns': [
   {
     'include': '#line_comments'
@@ -33,10 +23,16 @@
     'name': 'variable.language.dao'
   }
   {
-    'include': '#string_quoted_single'
+    'begin': '(")'
+    'comment': 'double-quoted raw string'
+    'end': '((?<=")(")|")|(\\n)'
+    'name': 'entity.other.inherited-class.python'
   }
   {
-    'include': '#string_quoted_double'
+    'begin': '(\')'
+    'comment': 'single-quoted raw string'
+    'end': '((?<=\')(\')|\')|(\\n)'
+    'name': 'entity.other.inherited-class.python'
   }
   {
     'match': '\\b(?i:(0x\\h*)L)'
@@ -114,13 +110,13 @@
     'captures':
       '1':
         # 'name': 'meta.class.inheritance.dao'
-        'name': 'entity.other.inherited-class.python'
+        'name': 'variable.language.dao'
     'comment': 'keywords that haven\'t fit into other groups (yet).'
     'match': '\\b(write|writeln|iterate|size|append|erase|insert|clear|push|pop|keys|values)\\b'
   }
   {
     'match': '\\b([A-Za-z_]+\\:\\:[A-Za-z0-9_]+)\\b'
-    'name': 'entity.other.inherited-class.python'
+    'name': 'constant.language.dao' # 'entity.other.inherited-class.python'
   }
   # {
   #   'match': '<\\=|>\\=|\\=\\=|<|>|\\[|\\]|{|}|\\(|\\)|\\!\\='
