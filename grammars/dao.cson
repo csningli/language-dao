@@ -33,6 +33,12 @@
     'name': 'variable.language.dao'
   }
   {
+    'include': '#string_quoted_single'
+  }
+  {
+    'include': '#string_quoted_double'
+  }
+  {
     'match': '\\b(?i:(0x\\h*)L)'
     'name': 'constant.numeric.integer.long.hexadecimal.dao'
   }
@@ -234,12 +240,7 @@
     'match': '\\b(none|true|false)\\b'
     'name': 'constant.language.dao'
   }
-  {
-    'include': '#string_quoted_single'
-  }
-  {
-    'include': '#string_quoted_double'
-  }
+
   {
     'begin' : '^\\s*(?=var)'
     'contentName': 'storage.type.class.dao'
