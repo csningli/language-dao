@@ -15,7 +15,7 @@
     'include': '#language_variables'
   }
   {
-    'match': '^\\s*#.*$'
+    'match': '\\s*#.*$'
     'name': 'comment'
   }
   {
@@ -112,7 +112,7 @@
         # 'name': 'meta.class.inheritance.dao'
         'name': 'variable.language.dao'
     'comment': 'keywords that haven\'t fit into other groups (yet).'
-    'match': '\\b(write|writeln|iterate|size|append|erase|insert|clear|push|pop|keys|values)\\b'
+    'match': '\\b(write|writeln|iterate|size|append|erase|insert|clear|push|pop|keys|values|find|floor|ceil)\\b'
   }
   {
     'match': '\\b([A-Za-z_]+\\:\\:[A-Za-z0-9_]+)\\b'
