@@ -19,7 +19,7 @@
     'name': 'comment'
   }
   {
-    'match': '\\b(public|protect|private|static|self|io|fs|os|std|type)\\b'
+    'match': '\\b(public|protect|private|static|self|io|fs|os|std|type|const)\\b'
     'name': 'variable.language.dao'
   }
   {
