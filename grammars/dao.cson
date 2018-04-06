@@ -123,18 +123,24 @@
   #   'name' : 'support.function.comparison.dao'
   # }
   {
+    'match': '\\{|\\}|\\(|\\)|\\[|\\]'
+    'name': 'constant.language.dao'
+  }
+  {
     'match': '\\+\\=|-\\=|\\*\\=|/\\=|%\\=|>>\\=|<<\\='
     'name' : 'support.function.assignment.dao'
   }
   {
-      'begin' : '(?<!\\!|\\=|\\<|\\>)(?=\\=(?!\\=))'
+      'begin' : '(?<!\\!|\\=|\\<|\\>)(?=(\\=)(?!\\=))'
       'contentName' : 'support.function.assignment.dao'
-      'end': '\\s+|(\')|(\")'
+      'end': '\\s+|(\')|(\")|(\\})'
       'endCaptures':
         '1':
           'name': 'entity.name.type.class.dao'
         '2':
           'name': 'entity.name.type.class.dao'
+        '3':
+          'name': 'constant.language.dao'
   }
   {
     'match': '\\+|\\-|\\*|\\*\\*|/|//|%'
