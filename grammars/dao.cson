@@ -123,7 +123,7 @@
   #   'name' : 'support.function.comparison.dao'
   # }
   {
-    'match': '\\{|\\}|\\(|\\)|\\[|\\]'
+    'match': '\\{|\\}'
     'name': 'constant.language.dao'
   }
   {
