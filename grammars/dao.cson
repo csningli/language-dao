@@ -124,7 +124,7 @@
   # }
   {
     'match': '\\{|\\}'
-    'name': 'constant.language.dao'
+    'name': 'block.language.dao'
   }
   {
     'match': '\\+\\=|-\\=|\\*\\=|/\\=|%\\=|>>\\=|<<\\='
