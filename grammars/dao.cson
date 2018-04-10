@@ -131,7 +131,7 @@
     'name' : 'support.function.assignment.dao'
   }
   {
-      'begin' : '(?<!\\!|\\=|\\<|\\>)(?=(\\=)(?!\\=))'
+      'begin' : '(?<!\\!|\\?|\\=|\\<|\\>)(?=(\\=)(?!\\=))'
       'contentName' : 'support.function.assignment.dao'
       'end': '\\s+|(\')|(\")|(\\})'
       'endCaptures':
