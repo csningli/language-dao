@@ -253,4 +253,9 @@
     'contentName': 'storage.type.class.dao'
     'end' : '\\s+'
   }
+
+  {
+    'match': '\\b(class|interface|routine)\\b'
+    'name': 'storage.type.class.dao'
+  }
 ]
