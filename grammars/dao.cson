@@ -155,7 +155,7 @@
     'name' : 'entity.name.type.class.dao'
   }
   {
-    'match': '\\b(string|list|tuple|map|float|bool|int|complex|enum|array|variant)\\b'
+    'match': '\\b(any|string|list|tuple|map|float|bool|int|complex|enum|array|variant)\\b'
     'name': 'entity.name.type.class.dao'
   }
   {
