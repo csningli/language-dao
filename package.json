@@ -1,6 +1,6 @@
 {
   "name": "language-dao",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Dao script language package for Atom.",
   "keywords": [
     "language",
